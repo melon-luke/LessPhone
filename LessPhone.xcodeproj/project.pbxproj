@@ -11,6 +11,15 @@
 		BB1D47BA284A448100FC42ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1D47B9284A448100FC42ED /* ContentView.swift */; };
 		BB1D47BC284A448400FC42ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1D47BB284A448400FC42ED /* Assets.xcassets */; };
 		BB1D47BF284A448400FC42ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1D47BE284A448400FC42ED /* Preview Assets.xcassets */; };
+		BB1D47C6284A50D700FC42ED /* KeepAliveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */; };
+		BB2D9370284A69670065BD20 /* DebugTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2D936F284A69670065BD20 /* DebugTool.swift */; };
+		BBA97B95284B7D83000F5C34 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97B94284B7D83000F5C34 /* EventBus.swift */; };
+		BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97B96284CA60E000F5C34 /* Storage.swift */; };
+		BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BBA97BFD284CC626000F5C34 /* LPCoreData.xcdatamodeld */; };
+		BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */; };
+		BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */; };
+		BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */; };
+		BBE5496428573B6B0004EBED /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +28,16 @@
 		BB1D47B9284A448100FC42ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BB1D47BB284A448400FC42ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB1D47BE284A448400FC42ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepAliveManager.swift; sourceTree = "<group>"; };
+		BB2D936E284A669D0065BD20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BB2D936F284A69670065BD20 /* DebugTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTool.swift; sourceTree = "<group>"; };
+		BBA97B94284B7D83000F5C34 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
+		BBA97B96284CA60E000F5C34 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		BBA97BFE284CC626000F5C34 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +70,14 @@
 		BB1D47B6284A448100FC42ED /* LessPhone */ = {
 			isa = PBXGroup;
 			children = (
+				BB2D936E284A669D0065BD20 /* Info.plist */,
 				BB1D47B7284A448100FC42ED /* LessPhoneApp.swift */,
+				BBA97C02284CCC83000F5C34 /* Storage */,
+				BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */,
+				BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */,
+				BBA97B94284B7D83000F5C34 /* EventBus.swift */,
 				BB1D47B9284A448100FC42ED /* ContentView.swift */,
+				BB2D936F284A69670065BD20 /* DebugTool.swift */,
 				BB1D47BB284A448400FC42ED /* Assets.xcassets */,
 				BB1D47BD284A448400FC42ED /* Preview Content */,
 			);
@@ -65,6 +90,18 @@
 				BB1D47BE284A448400FC42ED /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BBA97C02284CCC83000F5C34 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				BBA97BFD284CC626000F5C34 /* LPCoreData.xcdatamodeld */,
+				BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */,
+				BBA97B96284CA60E000F5C34 /* Storage.swift */,
+				BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */,
+				BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +175,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB1D47BA284A448100FC42ED /* ContentView.swift in Sources */,
+				BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */,
+				BBA97B95284B7D83000F5C34 /* EventBus.swift in Sources */,
 				BB1D47B8284A448100FC42ED /* LessPhoneApp.swift in Sources */,
+				BB1D47C6284A50D700FC42ED /* KeepAliveManager.swift in Sources */,
+				BB2D9370284A69670065BD20 /* DebugTool.swift in Sources */,
+				BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */,
+				BBE5496428573B6B0004EBED /* LocalNotificationManager.swift in Sources */,
+				BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */,
+				BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */,
+				BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +316,12 @@
 				DEVELOPMENT_TEAM = 3E7V932WPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LessPhone/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSMotionUsageDescription = "请允许访问健康数据，确保移动统计数据准确性";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +351,12 @@
 				DEVELOPMENT_TEAM = 3E7V932WPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LessPhone/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "请开启始终允许使用位置权限确保数据统计准确性";
+				INFOPLIST_KEY_NSMotionUsageDescription = "请允许访问健康数据，确保移动统计数据准确性";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -339,6 +397,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BBA97BFD284CC626000F5C34 /* LPCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BBA97BFE284CC626000F5C34 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = BBA97BFE284CC626000F5C34 /* CoreDataModel.xcdatamodel */;
+			path = LPCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BB1D47AC284A448100FC42ED /* Project object */;
 }

@@ -7,11 +7,66 @@
 
 import SwiftUI
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func applicationWillTerminate(_ application: UIApplication) {
+        KeepAliveManager.shared.appKill()
+        // app 即将被杀死
+        rp("log-applicationWillTerminate")
+    }
+}
+
+//class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+//
+//    func sceneDidDisconnect(_ scene: UIScene) {
+//        // app 即将被杀死
+//    }
+//
+//}
+
 @main
 struct LessPhoneApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @Environment(\.scenePhase) var scenePhase
+    let coreDataManager = CoreDataManager.shared
+
+        
+    init() {
+        KeepAliveManager.shared.run()
+        _ = EventBus.shared
+        _ = Storage.shared
+        _ = LocalNotificationManager.shared
+    }
+   
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
+        .onChange(of: scenePhase) { newScenePhase in
+            switch newScenePhase {
+            case .active:
+                rp("active")
+                
+
+                UIApplication.shared.beginBackgroundTask (withName: "Finish Network Tasks") {
+                    rp("forcefinish")
+                }
+            case .inactive:
+                rp("inactive")
+            case .background:
+                rp("background")
+                rp("backgroundTimeRemaining\(UIApplication.shared.backgroundTimeRemaining)")
+            @unknown default:
+                rp("default")
+            }
+        }
     }
+
+//    func cpuLoadTask() {
+//        for i in 0...100000000 {
+//            rp("cpuLoadTask\(i)s")
+//            rp("backgroundTimeRemaining\(UIApplication.shared.backgroundTimeRemaining)")
+//            sleep(1)
+//        }
+//    }
 }

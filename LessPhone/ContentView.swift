@@ -9,8 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+//        Text("Hello, world!")
+//            .padding()
+        ScrollViewReader { proxy in
+            ScrollView {
+                Text("Hello, world!")
+                Button("fetch CoreData") {
+                    Storage.shared.fetch()
+                }
+            }
+        }
     }
 }
 
