@@ -14,9 +14,9 @@ struct ContentView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 Text("Hello, world!")
-                Button("fetch CoreData") {
-                    Storage.shared.fetch()
-                }
+//                Button("fetch CoreData") {
+//                    Storage.shared.fetch()
+//                }
             }
         }
     }

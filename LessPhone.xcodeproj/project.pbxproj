@@ -19,6 +19,8 @@
 		BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */; };
 		BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */; };
 		BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */; };
+		BBCE020A286C2727008B2E5E /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0209286C2727008B2E5E /* Statistics.swift */; };
+		BBCE020C286C285C008B2E5E /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE020B286C285C008B2E5E /* Preference.swift */; };
 		BBE5496428573B6B0004EBED /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BBCE0209286C2727008B2E5E /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		BBCE020B286C285C008B2E5E /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +84,8 @@
 				BB2D936F284A69670065BD20 /* DebugTool.swift */,
 				BB1D47BB284A448400FC42ED /* Assets.xcassets */,
 				BB1D47BD284A448400FC42ED /* Preview Content */,
+				BBCE0209286C2727008B2E5E /* Statistics.swift */,
+				BBCE020B286C285C008B2E5E /* Preference.swift */,
 			);
 			path = LessPhone;
 			sourceTree = "<group>";
@@ -175,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB1D47BA284A448100FC42ED /* ContentView.swift in Sources */,
+				BBCE020C286C285C008B2E5E /* Preference.swift in Sources */,
 				BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */,
 				BBA97B95284B7D83000F5C34 /* EventBus.swift in Sources */,
 				BB1D47B8284A448100FC42ED /* LessPhoneApp.swift in Sources */,
@@ -184,6 +191,7 @@
 				BBE5496428573B6B0004EBED /* LocalNotificationManager.swift in Sources */,
 				BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */,
 				BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */,
+				BBCE020A286C2727008B2E5E /* Statistics.swift in Sources */,
 				BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

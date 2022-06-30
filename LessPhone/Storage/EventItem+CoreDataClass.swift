@@ -12,7 +12,7 @@ import CoreData
 @objc(EventItem)
 public class EventItem: NSManagedObject {
     
-    private enum EventType: Int16 {
+    public enum EventType: Int16 {
         // 解锁
         case unlock = 0
         // 锁定
@@ -21,7 +21,10 @@ public class EventItem: NSManagedObject {
         case timerTrigger = 3
     }
     
+    public var eventType: EventType {
+        EventType(rawValue: type)!
+    }
     public override var description: String {
-        return "type=\(EventType(rawValue: type)!),isWalking=\(isWalking),duration=\(duration),timestamp=\(timestamp!)"
+        return "type=\(eventType),isWalking=\(isWalking),duration=\(duration),timestamp=\(timestamp!)"
     }
 }

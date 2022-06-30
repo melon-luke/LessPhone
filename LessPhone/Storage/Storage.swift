@@ -35,17 +35,25 @@ struct Storage {
     }
     
     // 查询
-    func fetch() {
+    func fetchEventAfterDate(_ date: Date, type: EventItem.EventType?) -> [EventItem]? {
         let request = EventItem.fetchRequest()
-//        request.predicate = NSPredicate(format: "timestamp <= %d", NSDate().timeIntervalSince1970)
+        if let type = type {
+            request.predicate = NSPredicate(format: "timestamp >= %@ AND type = %d", date as CVarArg, type.rawValue)
+        } else {
+            request.predicate = NSPredicate(format: "timestamp >= %@", date as CVarArg)
+        }
         request.predicate = NSPredicate(value: true)
         let items = try? viewContext.fetch(request)
-        //修改
-        if let items = try? viewContext.fetch(request) {
-            for item in items {
-                print(item)
-            }
-        }
+        return items;
+    }
+    
+    
+//        //修改
+//        if let items = try? viewContext.fetch(request) {
+//            for item in items {
+//                print(item)
+//            }
+//        }
 //        //修改
 //        if let items = try? viewContext.fetch(request) {
 //            for item in items {
@@ -53,7 +61,7 @@ struct Storage {
 //            }
 //        }
 //        saveToContext()
-    }
+//    }
 //
 //    // 删除
 //    func delete() {
@@ -67,20 +75,11 @@ struct Storage {
 //        }
 //        saveToContext()
 //    }
-    
-    private enum EventType: Int16 {
-        // 解锁
-        case unlock = 0
-        // 锁定
-        case lock = 1
-        // 开锁情况下timer trigger
-        case timerTrigger = 3
-    }
-    
+
     private func saveLockEvent(isLocked: Bool) {
         viewContext.perform {
             let event = EventItem(context: viewContext)
-            event.type = isLocked ? EventType.lock.rawValue : EventType.unlock.rawValue
+            event.type = isLocked ? EventItem.EventType.lock.rawValue : EventItem.EventType.unlock.rawValue
             event.timestamp = Date()
             saveToContext()
         }
@@ -89,7 +88,7 @@ struct Storage {
     private func saveTimerTriggerEvent(duration: Int64, isWalking: Bool) {
         viewContext.perform {
             let event = EventItem(context: viewContext)
-            event.type = Storage.EventType.timerTrigger.rawValue
+            event.type = EventItem.EventType.timerTrigger.rawValue
             event.timestamp = Date()
             event.duration = duration
             event.isWalking = isWalking

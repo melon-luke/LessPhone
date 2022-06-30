@@ -31,7 +31,7 @@ class EventBus {
     private var isWalking = false
     
     private let pedometer = CMPedometer()
-    private var previosDate = Date()
+    private var previosDate = Statistics.todayBeginDate()
     private var midnightOfToday: Date = {
         //获取今天凌晨时间
         let cal = Calendar.current
@@ -84,7 +84,18 @@ class EventBus {
         //初始化并开始实时获取数据
         self.pedometer.queryPedometerData(from: previosDate, to: Date()) { pedometerData, error in
             //获取各个数据
-            var text = "numberOfSteps="
+            var text = "queryPedometerData_="
+            if let numberOfSteps = pedometerData?.numberOfSteps {
+                text += "\(numberOfSteps)"
+                self.isWalking = numberOfSteps.intValue > 4
+            }
+            rp(text)
+            completion(self.isWalking)
+        }
+        
+        self.pedometer.startUpdates(from: previosDate) { pedometerData, error in
+            //获取各个数据
+            var text = "startUpdates_numberOfSteps="
             if let numberOfSteps = pedometerData?.numberOfSteps {
                 text += "\(numberOfSteps)"
                 self.isWalking = numberOfSteps.intValue > 4
