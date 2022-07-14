@@ -13,23 +13,45 @@ struct Statistics {
     static func hourMin(from totalMin: Int) -> (Int, Int) {
         return (totalMin / 60, totalMin % 60)
     }
-    static func fetchTodayScreenTime() -> Int {
-        var totalSec = 0
-        if let items = Storage.shared.fetchEventAfterDate(todayBeginDate(), type: .timerTrigger) {
-//            totalSec = items.count * Int(items.first?.duration ?? 0)
-            totalSec = Int(items.reduce(0) { sum, item in
-                sum + item.duration
-            })
+    
+    static func fetchWalkingScreenTime() -> Int {
+        var walkingTotalSec = 0
+        let items = fetchTodayEventItems()
+        if items.count == 0 {
+            return 0
         }
-        return totalSec
+        if !items.last!.isWalking {
+            return 0
+        }
+        let reversexItems = items.reversed()
+        for item in reversexItems {
+            walkingTotalSec += Int(item.duration)
+            if !item.isWalking {
+                break
+            }
+        }
+        return walkingTotalSec
+    }
+    
+    static func fetchTodayScreenTime() -> Int {
+        let totalSec = fetchTodayEventItems()
+            .filter { $0.eventType == .timerTrigger }
+            .reduce(0) { sum, item in
+                sum + item.duration
+            }
+        return Int(totalSec)
     }
     
     static func fetchTodayUnlockCount() -> Int {
-        var totalCount = 0
-        if let items = Storage.shared.fetchEventAfterDate(todayBeginDate(), type: .unlock) {
-            totalCount = items.count
+        let items = fetchTodayEventItems().filter { $0.eventType == .unlock }
+        return items.count
+    }
+    
+    private static func fetchTodayEventItems() -> [EventItem] {
+        if let items = Storage.shared.fetchEventAfterDate(todayBeginDate()) {
+            return items
         }
-        return totalCount
+        return []
     }
     
     static func todayBeginDate() -> Date {

@@ -35,7 +35,7 @@ struct Storage {
     }
     
     // 查询
-    func fetchEventAfterDate(_ date: Date, type: EventItem.EventType?) -> [EventItem]? {
+    func fetchEventAfterDate(_ date: Date, type: EventItem.EventType? = nil) -> [EventItem]? {
         let request = EventItem.fetchRequest()
         if let type = type {
             request.predicate = NSPredicate(format: "timestamp >= %@ AND type = %d", date as CVarArg, type.rawValue)

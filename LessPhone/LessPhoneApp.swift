@@ -13,20 +13,31 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // app 即将被杀死
         rp("log-applicationWillTerminate")
     }
+    
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let configuration = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        if connectingSceneSession.role == .windowApplication {
+            configuration.delegateClass = SceneDelegate.self
+        }
+        return configuration
+    }
 }
 
-//class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-//
-//    func sceneDidDisconnect(_ scene: UIScene) {
-//        // app 即将被杀死
-//    }
-//
-//}
+class SceneDelegate: NSObject, ObservableObject, UIWindowSceneDelegate {
+    var window: UIWindow?   // << contract of `UIWindowSceneDelegate`
+    
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        self.window = windowScene.keyWindow   // << store !!!
+    }
+    func sceneDidDisconnect(_ scene: UIScene) {
+        // app 即将被杀死
+    }
+}
 
 @main
 struct LessPhoneApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
     @Environment(\.scenePhase) var scenePhase
     let coreDataManager = CoreDataManager.shared
 
