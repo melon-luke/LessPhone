@@ -46,6 +46,21 @@ struct Storage {
         let items = try? viewContext.fetch(request)
         return items;
     }
+    // 查询
+    func fetchEventBeforeDate(_ date: Date, type: EventItem.EventType? = nil, count: Int? = nil) -> [EventItem]? {
+        let request = EventItem.fetchRequest()
+        if let type = type {
+            request.predicate = NSPredicate(format: "timestamp < %@ AND type = %d", date as CVarArg, type.rawValue)
+        } else {
+            request.predicate = NSPredicate(format: "timestamp < %@", date as CVarArg)
+        }
+        request.predicate = NSPredicate(value: true)
+        if let count = count {
+            request.fetchLimit = count
+        }
+        let items = try? viewContext.fetch(request)
+        return items;
+    }
     
     
 //        //修改

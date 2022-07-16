@@ -8,7 +8,7 @@
 import Foundation
 
 //let baseUrl = "http://192.168.31.158:8000/"
-let baseUrl = "http://10.236.124.236:8000/"
+let baseUrl = "http://10.237.93.3:8000/"
 
 func rp(_ log: String) {
     print("🌻LOG: " + log)

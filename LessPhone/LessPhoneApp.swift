@@ -47,6 +47,7 @@ struct LessPhoneApp: App {
         _ = EventBus.shared
         _ = Storage.shared
         _ = LocalNotificationManager.shared
+        _ = Statistics.shared
     }
    
     var body: some Scene {
@@ -54,11 +55,12 @@ struct LessPhoneApp: App {
             ContentView()
         }
         .onChange(of: scenePhase) { newScenePhase in
+            
             switch newScenePhase {
             case .active:
                 rp("active")
                 
-
+                EventBus.shared.appActive()
                 UIApplication.shared.beginBackgroundTask (withName: "Finish Network Tasks") {
                     rp("forcefinish")
                 }

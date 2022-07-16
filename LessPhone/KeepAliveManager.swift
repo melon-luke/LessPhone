@@ -26,7 +26,7 @@ class KeepAliveManager: NSObject, ObservableObject {
         locationManager.startUpdatingLocation()
     }
     func appKill() {
-        LocalNotificationManager.shared.sendNotification(title: "请不要关掉我！", subtitle: nil, body: "强制退出后将无法统计到你的屏幕使用时间，点击重新打开", launchIn: 0.1)
+        LocalNotificationManager.shared.sendAppKill()
     }
 }
 

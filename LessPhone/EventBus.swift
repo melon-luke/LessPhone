@@ -11,99 +11,119 @@ import CoreMotion
 
 class EventBus {
     static let shared = EventBus()
-    
-    /// 锁屏解锁事件
-    private let lockNotifi = NotificationCenter.default
-        .publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
-    private var lockCancellable: AnyCancellable?
-    
-    private let unlockNotifi = NotificationCenter.default
-        .publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
-    private var unlockCancellable: AnyCancellable?
-    
-    private var isUnLocking = false
+    var isUnLocking = false
     private let duration: TimeInterval = 10
+    
+    // 定时存数据库 timer
     private var timer: Timer.TimerPublisher
     private var timerCancellable: AnyCancellable?
     
-    /// 检测当前是否在走路
-    private let motionActivityManager = CMMotionActivityManager()
+    // 实时更新数据UI timer
+    private var realTimeTimer: Timer.TimerPublisher
+    private var realTimeTimerCancellable: AnyCancellable?
+     
+    /// 检测当前是否在走路 (计步器)
     private var isWalking = false
-    
     private let pedometer = CMPedometer()
-    private var previosDate = Statistics.todayBeginDate()
-    private var midnightOfToday: Date = {
-        //获取今天凌晨时间
-        let cal = Calendar.current
-        var comps = cal.dateComponents([.year, .month, .day], from: Date())
-        comps.hour = 0
-        comps.minute = 0
-        comps.second = 0
-        return cal.date(from: comps)!
-    }()
+    private var previosDate = Statistics.shared.todayBeginDate()
+    private var numberOfSteps = 0
+
     init() {
         timer = Timer.publish(every: duration, on: .main, in: .default)
+        realTimeTimer = Timer.publish(every: 1, on: .main, in: .default)
+        fetchStepCount(notifUser: false)
         listenLockEvent()
         unLockAction()
     }
-    
+    func appActive() {
+        fetchStepCount(notifUser: false)
+        triggerAlert()
+    }
     private func listenLockEvent() {
-        unlockCancellable = unlockNotifi.sink { [weak self] noti in
+        /// 锁屏解锁事件
+        let unlockNotifi = NotificationCenter.default
+            .publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
+        _ = unlockNotifi.sink { [weak self] noti in
             guard let self = self else { return }
             rp("unlock")
             self.unLockAction()
         }
         
-        lockCancellable = lockNotifi.sink { [weak self] notif in
+        /// 锁屏事件
+        let lockNotifi = NotificationCenter.default
+            .publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
+        _ = lockNotifi.sink { [weak self] notif in
             guard let self = self else { return }
             self.isUnLocking = false
-            //            self.endRecordModtion()
             rp("lock")
             self.timerCancellable?.cancel()
+            self.realTimeTimerCancellable?.cancel()
             Storage.shared.addLockEvent(isLocked: true)
         }
     }
     private func unLockAction() {
         self.isUnLocking = true
-//        self.startRecordMotion()
         Storage.shared.addLockEvent(isLocked: false)
+        
         self.timerCancellable = self.timer
             .autoconnect()
-            .sink(receiveValue: { timer in
-                if self.isUnLocking {
-                    self.fetchStepCount { isWalking in
+            .sink(receiveValue: { [weak self] timer in
+                guard let self = self,
+                      self.isUnLocking else {
+                    return
+                }
+                self.fetchStepCount { isWalking in
+                    if isWalking {
                         Storage.shared.addTimerTriggerEvent(duration: Int64(self.duration), isWalking: isWalking)
                     }
                 }
+                self.triggerAlert()
+            })
+        self.realTimeTimerCancellable = self.realTimeTimer
+            .autoconnect()
+            .sink(receiveValue: { [weak self] timer in
+                guard let self = self else { return }
+                Statistics.shared.updateRealTimeInSecond(isWalking: self.isWalking)
             })
     }
     private func triggerAlert() {
-        // TODO: 调用Alert
+        Statistics.shared.calculateAllData()
     }
-    private func fetchStepCount(_ completion: @escaping (Bool) -> ()) {
+    private func fetchStepCount(notifUser: Bool? = true, _ completion: ((Bool) -> ())? = nil) {
         //初始化并开始实时获取数据
-        self.pedometer.queryPedometerData(from: previosDate, to: Date()) { pedometerData, error in
+        let current = Date()
+        self.pedometer.queryPedometerData(from: previosDate, to: current) { pedometerData, error in
             //获取各个数据
-            var text = "queryPedometerData_="
+            var text = "queryPedometer "
             if let numberOfSteps = pedometerData?.numberOfSteps {
-                text += "\(numberOfSteps)"
-                self.isWalking = numberOfSteps.intValue > 4
+                text += "Steps=\(numberOfSteps.intValue)"
+                self.previosDate = current
+                self.isWalking = numberOfSteps.intValue > 0
+                self.numberOfSteps = self.numberOfSteps + numberOfSteps.intValue
+//                //在线程中更新文本框数据
+//                DispatchQueue.main.async{
+//                    self.textView.text = text
+//                }
+            }
+            if let pace = pedometerData?.currentPace {
+                text += "pace=\(pace.intValue)"
+            }
+            if let distance = pedometerData?.distance {
+                text += "distance=\(distance.intValue)"
+            }
+            if let err = error {
+                text += err.localizedDescription
             }
             rp(text)
-            completion(self.isWalking)
-        }
-        
-        self.pedometer.startUpdates(from: previosDate) { pedometerData, error in
-            //获取各个数据
-            var text = "startUpdates_numberOfSteps="
-            if let numberOfSteps = pedometerData?.numberOfSteps {
-                text += "\(numberOfSteps)"
-                self.isWalking = numberOfSteps.intValue > 4
+            if self.isWalking {
+                LocalNotificationManager.shared.sendNotification(title: "边走边看很危险！", subtitle: nil, body: "step=\(self.numberOfSteps)", launchIn: 0.1)
             }
-            rp(text)
-            completion(self.isWalking)
+            completion?(self.isWalking)
         }
     }
+    
+//    /// 检测当前是否在走路 （达咩）
+//    private let motionActivityManager = CMMotionActivityManager()
 //    private func startRecordMotion() {
 //        //判断设备支持情况
 //        guard CMPedometer.isStepCountingAvailable() else {

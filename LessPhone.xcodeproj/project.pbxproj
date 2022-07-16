@@ -13,6 +13,9 @@
 		BB1D47BF284A448400FC42ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1D47BE284A448400FC42ED /* Preview Assets.xcassets */; };
 		BB1D47C6284A50D700FC42ED /* KeepAliveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */; };
 		BB2D9370284A69670065BD20 /* DebugTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2D936F284A69670065BD20 /* DebugTool.swift */; };
+		BB842309288145CC000B2920 /* MainCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB842308288145CC000B2920 /* MainCardView.swift */; };
+		BB84230B288145E9000B2920 /* PreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84230A288145E9000B2920 /* PreferenceView.swift */; };
+		BB84230D28815D5C000B2920 /* MainCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84230C28815D5C000B2920 /* MainCardViewModel.swift */; };
 		BBA97B95284B7D83000F5C34 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97B94284B7D83000F5C34 /* EventBus.swift */; };
 		BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97B96284CA60E000F5C34 /* Storage.swift */; };
 		BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BBA97BFD284CC626000F5C34 /* LPCoreData.xcdatamodeld */; };
@@ -33,6 +36,9 @@
 		BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepAliveManager.swift; sourceTree = "<group>"; };
 		BB2D936E284A669D0065BD20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BB2D936F284A69670065BD20 /* DebugTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTool.swift; sourceTree = "<group>"; };
+		BB842308288145CC000B2920 /* MainCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCardView.swift; sourceTree = "<group>"; };
+		BB84230A288145E9000B2920 /* PreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceView.swift; sourceTree = "<group>"; };
+		BB84230C28815D5C000B2920 /* MainCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCardViewModel.swift; sourceTree = "<group>"; };
 		BBA97B94284B7D83000F5C34 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
 		BBA97B96284CA60E000F5C34 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		BBA97BFE284CC626000F5C34 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -74,18 +80,20 @@
 		BB1D47B6284A448100FC42ED /* LessPhone */ = {
 			isa = PBXGroup;
 			children = (
-				BB2D936E284A669D0065BD20 /* Info.plist */,
 				BB1D47B7284A448100FC42ED /* LessPhoneApp.swift */,
-				BBA97C02284CCC83000F5C34 /* Storage */,
-				BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */,
-				BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */,
-				BBA97B94284B7D83000F5C34 /* EventBus.swift */,
 				BB1D47B9284A448100FC42ED /* ContentView.swift */,
-				BB2D936F284A69670065BD20 /* DebugTool.swift */,
-				BB1D47BB284A448400FC42ED /* Assets.xcassets */,
-				BB1D47BD284A448400FC42ED /* Preview Content */,
+				BB84230628814590000B2920 /* CardPage */,
+				BB8423072881459A000B2920 /* Preference */,
+				BB2D936E284A669D0065BD20 /* Info.plist */,
+				BBA97C02284CCC83000F5C34 /* Storage */,
+				BBA97B94284B7D83000F5C34 /* EventBus.swift */,
 				BBCE0209286C2727008B2E5E /* Statistics.swift */,
 				BBCE020B286C285C008B2E5E /* Preference.swift */,
+				BB1D47BB284A448400FC42ED /* Assets.xcassets */,
+				BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */,
+				BB1D47C5284A50D700FC42ED /* KeepAliveManager.swift */,
+				BB2D936F284A69670065BD20 /* DebugTool.swift */,
+				BB1D47BD284A448400FC42ED /* Preview Content */,
 			);
 			path = LessPhone;
 			sourceTree = "<group>";
@@ -96,6 +104,23 @@
 				BB1D47BE284A448400FC42ED /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BB84230628814590000B2920 /* CardPage */ = {
+			isa = PBXGroup;
+			children = (
+				BB842308288145CC000B2920 /* MainCardView.swift */,
+				BB84230C28815D5C000B2920 /* MainCardViewModel.swift */,
+			);
+			path = CardPage;
+			sourceTree = "<group>";
+		};
+		BB8423072881459A000B2920 /* Preference */ = {
+			isa = PBXGroup;
+			children = (
+				BB84230A288145E9000B2920 /* PreferenceView.swift */,
+			);
+			path = Preference;
 			sourceTree = "<group>";
 		};
 		BBA97C02284CCC83000F5C34 /* Storage */ = {
@@ -182,15 +207,18 @@
 			files = (
 				BB1D47BA284A448100FC42ED /* ContentView.swift in Sources */,
 				BBCE020C286C285C008B2E5E /* Preference.swift in Sources */,
+				BB84230B288145E9000B2920 /* PreferenceView.swift in Sources */,
 				BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */,
 				BBA97B95284B7D83000F5C34 /* EventBus.swift in Sources */,
 				BB1D47B8284A448100FC42ED /* LessPhoneApp.swift in Sources */,
+				BB842309288145CC000B2920 /* MainCardView.swift in Sources */,
 				BB1D47C6284A50D700FC42ED /* KeepAliveManager.swift in Sources */,
 				BB2D9370284A69670065BD20 /* DebugTool.swift in Sources */,
 				BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */,
 				BBE5496428573B6B0004EBED /* LocalNotificationManager.swift in Sources */,
 				BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */,
 				BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */,
+				BB84230D28815D5C000B2920 /* MainCardViewModel.swift in Sources */,
 				BBCE020A286C2727008B2E5E /* Statistics.swift in Sources */,
 				BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */,
 			);

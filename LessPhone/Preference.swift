@@ -7,7 +7,7 @@
 
 import Foundation
 protocol AlertRules {
-    func check()
+    static func check()
 }
 struct Preference {
     // h: m = beginOfDay / 60 : beginOfDay % 60
@@ -64,7 +64,7 @@ struct Preference {
 }
 
 extension Preference: AlertRules {
-    func check() {
+    static func check() {
         
     }
 }
