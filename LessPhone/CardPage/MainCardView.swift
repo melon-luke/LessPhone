@@ -12,12 +12,42 @@ struct MainCardView: View {
     
     
     var body: some View {
-        ScrollView {
-            VStack {
-                todayTimeScreenView
-                debugView
-            }
-        }.background(Color.background)
+        GeometryReader { geometry in
+            ScrollView {
+                VStack {
+                    todayTimeScreenView
+                    let space:CGFloat = 18.0
+                    Spacer(minLength: space)
+                    let w = (geometry.size.width - 18 * 3) / 2
+                    HStack {
+                        LazyVGrid(columns: [GridItem(.fixed(w)), GridItem(.fixed(w))]) {
+                            CardView(title: "拿起次数",
+                                     image: Image(systemName: "iphone.homebutton"),
+                                     subTitle: "\(model.pickupCount)次")
+                            if let date = model.firstTimePickup {
+                                CardView(title: "第一次拿起",
+                                         image: Image(systemName: "iphone.homebutton"),
+                                         subTitle: "\(timeString_hm(date))")
+                            }
+                            if let date2 = model.lastTimePutDownYesterday {
+                                CardView(title: "最后一次放下",
+                                         image: Image(systemName: "iphone.homebutton"),
+                                         subTitle: "\(timeString(date2))")
+                            }
+                            CardView(title: "呆呆的看",
+                                     image: Image(systemName: "iphone.homebutton"),
+                                     subTitle: "\(timeString_ch(model.screenTimeInStill))")
+                            CardView(title: "边走边看",
+                                     image: Image(systemName: "iphone.homebutton"),
+                                     subTitle: "\(timeString_ch(model.screenTimeInWalking))")
+                        }
+                    }
+                    
+                    debugView
+                }
+            }.background(Color.background)
+        }
+       
     }
     
 }
@@ -28,7 +58,7 @@ extension MainCardView {
             CircularProgressView(progress: progress)
                         .frame(width: 200, height: 200)
             
-            VStack {
+            VStack(spacing: 10) {
                 Text("\(timeString(model.screenTime))")
                     .foregroundColor(Color.text_main)
                     .font(Font.system(.largeTitle))
@@ -65,13 +95,35 @@ extension MainCardView {
             Text("今天最后一次放下:\(timeString(model.lastTimePutDownToday))")
         }
     }
+    func timeString_ch(_ second: Int) -> String {
+        let (h, m, s) = model.hourMinSec(from: second)
+        var res = ""
+        if h != 0 {
+            res += "\(h)小时"
+        }
+        if m != 0 {
+            res += "\(m)分钟"
+        }
+        if (h == 0 && m == 0) {
+            res = "\(s)秒"
+        }
+        return res
+    }
     func timeString(_ second: Int) -> String {
         let (h, m, s) = model.hourMinSec(from: second)
         return "\(h):\(m):\(s)"
     }
+    func timeString_hm(_ second: Int) -> String {
+        let (h, m, _) = model.hourMinSec(from: second)
+        return "\(h):\(m)"
+    }
     func timeString(_ date: Date?) -> String {
         guard let date = date else { return "" }
         return date.beijingStr("yyyy年MM月dd日 HH:mm:ss")
+    }
+    func timeString_hm(_ date: Date?) -> String {
+        guard let date = date else { return "" }
+        return date.beijingStr("HH:mm")
     }
 }
 
