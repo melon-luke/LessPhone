@@ -9,11 +9,17 @@ import Foundation
 
 class Statistics: ObservableObject {
     // 屏幕时间(秒)
-    @Published var screenTime: Int = 0
+    @Published var screenTime: Int = 0 {
+        didSet {
+            screenTimeInStill = screenTime - screenTimeInWalking
+        }
+    }
     // 屏幕时间(秒)
     @Published var screenTimeInWalking: Int = 0
     // 呆呆地看(秒)
     @Published var screenTimeInStill: Int = 0
+    // 今天拿起次数
+    @Published var pickupCount: Int = 0
     // （今天）第一次拿起
     @Published var firstTimePickup: Date?
     // 昨天最后一次放下
@@ -31,13 +37,14 @@ class Statistics: ObservableObject {
         if (isWalking) {
             screenTimeInWalking += 1
         }
-        screenTimeInStill = screenTime - screenTimeInWalking
     }
     func calculateAllData() {
+        screenTimeInWalking = 0
         let items = fetchTodayEventItems()
         calculateTodayPickUpDownTime(items: items)
-        screenTime += calculateScreenTime(items: items)
-        screenTimeInWalking += calculateWalkingScreenTime(items: items)
+        pickupCount = calculateUnlockCount(items: items)
+        screenTime = max(screenTime, calculateScreenTime(items: items))
+        screenTimeInWalking = max(screenTimeInWalking, calculateWalkingScreenTime(items: items))
         Preference.check()
     }
     func calculateWalkingScreenTime(items: [EventItem]) -> Int {
@@ -79,9 +86,10 @@ class Statistics: ObservableObject {
             }
         }
     }
+
     
     func calculateScreenTime(items: [EventItem]) -> Int {
-        var totalSec = 0
+        var lockUnlockTotalSec = 0
         var unlockTimeStamp = 0
         for item in items {
             if item.eventType == .unlock {
@@ -89,16 +97,16 @@ class Statistics: ObservableObject {
             }
             if item.eventType == .lock {
                 let lockTimeStamp = Int(item.timestamp?.timeIntervalSince1970 ?? 0.0)
-                totalSec += lockTimeStamp - unlockTimeStamp
+                lockUnlockTotalSec += lockTimeStamp - unlockTimeStamp
             }
         }
-        return totalSec
-//        let totalSec = items
-//            .filter { $0.eventType == .timerTrigger }
-//            .reduce(0) { sum, item in
-//                sum + item.duration
-//            }
-//        return Int(totalSec)
+//        return totalSec
+        let durationTotalSec = items
+            .filter { $0.eventType == .timerTrigger }
+            .reduce(0) { sum, item in
+                sum + item.duration
+            }
+        return max(lockUnlockTotalSec, Int(durationTotalSec))
     }
     
     func calculateUnlockCount(items: [EventItem]) -> Int {
@@ -108,12 +116,16 @@ class Statistics: ObservableObject {
     
     private func fetchTodayEventItems() -> [EventItem] {
         if let items = Storage.shared.fetchEventAfterDate(todayBeginDate()) {
+            print("今天之后的数据")
+            print(items)
             return items
         }
         return []
     }
     private func fetchYesterdayLastLockItem() -> EventItem? {
         if let items = Storage.shared.fetchEventBeforeDate(todayBeginDate(), type: .lock, count: 1) {
+            print("今天之前的数据")
+            print(items)
             return items.last
         }
         return nil
@@ -131,6 +143,38 @@ class Statistics: ObservableObject {
     }
 }
 //
+extension Date {
+    // 返回北京时间
+    static func current() -> Date {
+        let date = Date()
+        let interval = NSTimeZone.system.secondsFromGMT(for: date)
+        return date.addingTimeInterval(TimeInterval(interval))
+    }
+    // 返回北京时间
+    func beijing() -> Date {
+        let interval = NSTimeZone.system.secondsFromGMT(for: self)
+        return self.addingTimeInterval(TimeInterval(interval))
+    }
+    private static let formatter =  DateFormatter()
+    func beijingStr(_ formatterStr: String) -> String {
+//        let interval = NSTimeZone.system.secondsFromGMT(for: self)
+//        let date = self.addingTimeInterval(TimeInterval(interval))
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = formatterStr
+////        [NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
+//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 8)//NSTimeZone(name: <#T##String#>)
+//        return dateFormatter.string(from: self)
+
+        Date.formatter.dateFormat = formatterStr
+        
+//        formater.locale = Locale(identifier: "zh_hans_CN")
+        Date.formatter.timeZone = TimeZone.current
+//        formater.dateStyle = .medium
+//        formater.timeStyle = .medium
+        return Date.formatter.string(from: self)
+    }
+}
 extension Statistics {
     func hourMinSec(from totalSec: Int) -> (Int, Int, Int) {
         return (totalSec / 3600, totalSec / 60, totalSec % 60)

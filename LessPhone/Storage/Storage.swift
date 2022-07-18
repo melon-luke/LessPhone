@@ -34,6 +34,7 @@ struct Storage {
         saveTimerTriggerEvent(duration: duration, isWalking: isWalking)
     }
     
+    
     // 查询
     func fetchEventAfterDate(_ date: Date, type: EventItem.EventType? = nil) -> [EventItem]? {
         let request = EventItem.fetchRequest()
@@ -42,7 +43,6 @@ struct Storage {
         } else {
             request.predicate = NSPredicate(format: "timestamp >= %@", date as CVarArg)
         }
-        request.predicate = NSPredicate(value: true)
         let items = try? viewContext.fetch(request)
         return items;
     }
@@ -54,14 +54,19 @@ struct Storage {
         } else {
             request.predicate = NSPredicate(format: "timestamp < %@", date as CVarArg)
         }
-        request.predicate = NSPredicate(value: true)
         if let count = count {
             request.fetchLimit = count
         }
         let items = try? viewContext.fetch(request)
         return items;
     }
-    
+    // 查询所有
+    func fetch() -> [EventItem]? {
+        let request = EventItem.fetchRequest()
+        let items = try? viewContext.fetch(request)
+        request.predicate = NSPredicate(value: true)
+        return items;
+    }
     
 //        //修改
 //        if let items = try? viewContext.fetch(request) {
@@ -78,18 +83,18 @@ struct Storage {
 //        saveToContext()
 //    }
 //
-//    // 删除
-//    func delete() {
-//        let request = EventItem.fetchRequest()
-//        request.predicate = NSPredicate(format: "timestamp <= %d", NSDate().timeIntervalSince1970)
-//
-//        if let items = try? viewContext.fetch(request) {
-//            for item in items {
-//                viewContext.delete(item)
-//            }
-//        }
-//        saveToContext()
-//    }
+    // 删除所有
+    func delete() {
+        let request = EventItem.fetchRequest()
+        request.predicate = NSPredicate(value: true)
+
+        if let items = try? viewContext.fetch(request) {
+            for item in items {
+                viewContext.delete(item)
+            }
+        }
+        saveToContext()
+    }
 
     private func saveLockEvent(isLocked: Bool) {
         viewContext.perform {

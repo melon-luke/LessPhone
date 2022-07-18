@@ -25,6 +25,13 @@ public class EventItem: NSManagedObject {
         EventType(rawValue: type)!
     }
     public override var description: String {
-        return "type=\(eventType),isWalking=\(isWalking),duration=\(duration),timestamp=\(timestamp!)"
+        return "type=\(eventType),isWalking=\(isWalking),duration=\(duration),timestamp=\(timestamp!.beijing())"
+    }
+}
+extension Array {
+    func printItems(_ items: [EventItem]) {
+        for item in items {
+            print(item)
+        }
     }
 }

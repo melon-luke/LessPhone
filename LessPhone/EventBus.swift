@@ -11,6 +11,16 @@ import CoreMotion
 
 class EventBus {
     static let shared = EventBus()
+    /// 锁屏解锁事件 （必须声明成全局变量，否则离开作用域就回收了）
+    private let lockNotifi = NotificationCenter.default
+        .publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
+    private var lockCancellable: AnyCancellable?
+    
+    private let unlockNotifi = NotificationCenter.default
+        .publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
+    private var unlockCancellable: AnyCancellable?
+
+    
     var isUnLocking = false
     private let duration: TimeInterval = 10
     
@@ -19,8 +29,8 @@ class EventBus {
     private var timerCancellable: AnyCancellable?
     
     // 实时更新数据UI timer
-    private var realTimeTimer: Timer.TimerPublisher
-    private var realTimeTimerCancellable: AnyCancellable?
+    private var realTimeUITimer: Timer.TimerPublisher
+    private var realTimeUITimerCancellable: AnyCancellable?
      
     /// 检测当前是否在走路 (计步器)
     private var isWalking = false
@@ -30,34 +40,41 @@ class EventBus {
 
     init() {
         timer = Timer.publish(every: duration, on: .main, in: .default)
-        realTimeTimer = Timer.publish(every: 1, on: .main, in: .default)
+        realTimeUITimer = Timer.publish(every: 1, on: .main, in: .default)
         fetchStepCount(notifUser: false)
         listenLockEvent()
         unLockAction()
     }
-    func appActive() {
-        fetchStepCount(notifUser: false)
-        triggerAlert()
+    func appActive(_ active: Bool) {
+        if active {
+            self.realTimeUITimerCancellable = self.realTimeUITimer
+                .autoconnect()
+                .sink(receiveValue: { [weak self] timer in
+                    guard let self = self else { return }
+                    Statistics.shared.updateRealTimeInSecond(isWalking: self.isWalking)
+                })
+            fetchStepCount(notifUser: false)
+            triggerAlert()
+        } else {
+            self.realTimeUITimerCancellable?.cancel()
+        }
+        
     }
     private func listenLockEvent() {
         /// 锁屏解锁事件
-        let unlockNotifi = NotificationCenter.default
-            .publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
-        _ = unlockNotifi.sink { [weak self] noti in
+        unlockCancellable = unlockNotifi.sink { [weak self] noti in
             guard let self = self else { return }
             rp("unlock")
             self.unLockAction()
         }
         
         /// 锁屏事件
-        let lockNotifi = NotificationCenter.default
-            .publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
-        _ = lockNotifi.sink { [weak self] notif in
+        lockCancellable = lockNotifi.sink { [weak self] notif in
             guard let self = self else { return }
             self.isUnLocking = false
             rp("lock")
             self.timerCancellable?.cancel()
-            self.realTimeTimerCancellable?.cancel()
+            self.realTimeUITimerCancellable?.cancel()
             Storage.shared.addLockEvent(isLocked: true)
         }
     }
@@ -73,17 +90,9 @@ class EventBus {
                     return
                 }
                 self.fetchStepCount { isWalking in
-                    if isWalking {
-                        Storage.shared.addTimerTriggerEvent(duration: Int64(self.duration), isWalking: isWalking)
-                    }
+                    Storage.shared.addTimerTriggerEvent(duration: Int64(self.duration), isWalking: isWalking)
                 }
-                self.triggerAlert()
-            })
-        self.realTimeTimerCancellable = self.realTimeTimer
-            .autoconnect()
-            .sink(receiveValue: { [weak self] timer in
-                guard let self = self else { return }
-                Statistics.shared.updateRealTimeInSecond(isWalking: self.isWalking)
+//                self.triggerAlert()
             })
     }
     private func triggerAlert() {

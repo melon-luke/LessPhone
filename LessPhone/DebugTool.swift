@@ -12,6 +12,7 @@ let baseUrl = "http://10.237.93.3:8000/"
 
 func rp(_ log: String) {
     print("🌻LOG: " + log)
+    return
     let url = "\(baseUrl)?log=\(log.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
     URLSession.shared.dataTask(with: URL(string: url)!) { data, reponse, err in
         if err != nil {

@@ -60,11 +60,12 @@ struct LessPhoneApp: App {
             case .active:
                 rp("active")
                 
-                EventBus.shared.appActive()
+                EventBus.shared.appActive(true)
                 UIApplication.shared.beginBackgroundTask (withName: "Finish Network Tasks") {
                     rp("forcefinish")
                 }
             case .inactive:
+                EventBus.shared.appActive(false)
                 rp("inactive")
             case .background:
                 rp("background")

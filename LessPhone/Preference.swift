@@ -31,12 +31,12 @@ struct Preference {
     }
     
     // 超时后，每xx分钟提醒用户，存分钟数
-    static var remindPerMinute: Int {
+    static var screenLimitTimeRemindPerMinute: Int {
         set {
-            UserDefaults.standard.set(newValue, forKey: "kRemindPerMinute")
+            UserDefaults.standard.set(newValue, forKey: "kScreenLimitTimeRemindPerMinute")
         }
         get {
-            UserDefaults.standard.integer(forKey: "kRemindPerMinute")
+            UserDefaults.standard.integer(forKey: "kScreenLimitTimeRemindPerMinute")
         }
     }
     
@@ -49,6 +49,27 @@ struct Preference {
             UserDefaults.standard.bool(forKey: "kAllowNotiUser")
         }
     }
+    
+    /// 拿起次数先混在一起
+    // 拿起次数挑战
+    static var pickupCount: Int {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "kPickupCount")
+        }
+        get {
+            UserDefaults.standard.integer(forKey: "kPickupCount")
+        }
+    }
+    // 拿起次数挑战没拿起几次提示
+    static var pickupRemindPerCount: Int {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "kPickupRemindPerCount")
+        }
+        get {
+            UserDefaults.standard.integer(forKey: "kPickupRemindPerCount")
+        }
+    }
+    
     struct Const {
         // 例如23 : 10
         let beginOfDaytPicker = (hour : (0...6).map { $0 },
@@ -60,6 +81,13 @@ struct Preference {
         
         // 小于60分钟 显示1小时
         let remindPerMinuteArr = [15, 30, 60]
+        
+        
+        // 小于60分钟 显示1小时
+        let pickupCount = [1, 10, 25]
+        
+        // 小于60分钟 显示1小时
+        let pickupRemindPerCount = [10] + (1...10).map { $0 * 20}
     }
 }
 
