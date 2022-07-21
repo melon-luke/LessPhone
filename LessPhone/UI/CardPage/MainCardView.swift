@@ -25,24 +25,24 @@ struct MainCardView: View {
                     HStack {
                         LazyVGrid(columns: [GridItem(.fixed(w)), GridItem(.fixed(w))]) {
                             CardView(title: "拿起次数",
-                                     image: Image(systemName: "iphone.homebutton"),
+                                     image: Image("pickup_count"),
                                      subTitle: "\(model.pickupCount)次")
                             if let date = model.firstTimePickup {
                                 CardView(title: "第一次拿起",
-                                         image: Image(systemName: "iphone.homebutton"),
+                                         image: Image("first_pickup"),
                                          subTitle: "\(date.timeString_hm())")
                             }
                             if let date2 = model.lastTimePutDownYesterday {
                                 CardView(title: "最后一次放下",
-                                         image: Image(systemName: "iphone.homebutton"),
+                                         image: Image("last_putDown"),
                                          subTitle: "\(date2.timeString())")
                             }
                             CardView(title: "呆呆的看",
-                                     image: Image(systemName: "iphone.homebutton"),
-                                     subTitle: "\(model.screenTimeInStill.timeString_ch())")
+                                     image: Image("watch_still"),
+                                     subTitle: "\(model.screenTimeInStill.secToTimeString_ch())")
                             CardView(title: "边走边看",
-                                     image: Image(systemName: "iphone.homebutton"),
-                                     subTitle: "\(model.screenTimeInWalking.timeString_ch())")
+                                     image: Image("watch_walking"),
+                                     subTitle: "\(model.screenTimeInWalking.secToTimeString_ch())")
                         }
                     }
                     
@@ -57,9 +57,15 @@ struct MainCardView: View {
 extension MainCardView {
     var todayTimeScreenView: some View {
         ZStack {
-            let progress: CGFloat = CGFloat(model.screenTime) / 3600.0
+            let screenLimitSec = Preference.screenLimitTime * 60
+            let screenLimit = screenLimitSec.secToTimeString_ch()
+            let progress = CGFloat(model.screenTime) / CGFloat(screenLimitSec)
             CircularProgressView(progress: progress)
             VStack(spacing: 10) {
+                Text("限额：\(screenLimit)")
+                    .font(Font.system(.footnote))
+                    .foregroundColor(Color.text_sub)
+                    .frame(alignment: .top)
                 Text("\(model.screenTime.timeString())")
                     .foregroundColor(Color.text_main)
                     .font(Font.system(.largeTitle))

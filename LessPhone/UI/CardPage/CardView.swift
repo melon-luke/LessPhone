@@ -13,18 +13,26 @@ struct CardView: View {
     var subTitle: String
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10).fill(Color.white)
+            RoundedRectangle(cornerRadius: 10).fill(Color.white) .shadow(color: Color.black.opacity(0.1), radius: 10, y:7)
             VStack {
                 Spacer()
                 Text(title)
                 Spacer()
-                image.font(.system(size: 40))
+                    .fixedSize()
+                    .frame(height: 5)
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+//                    .padding()
+//                    .aspectRatio(0.9, contentMode: .fit)
                 Spacer()
+                    .fixedSize()
+                    .frame(height: 5)
                 Text(subTitle)
                 Spacer()
             }
         }
-        .shadow(color: Color.black.opacity(0.1), radius: 10, y:7)
+       
         .aspectRatio(0.9, contentMode: .fit)
         .padding(9)
 //        .frame(width: 120, height: 180, alignment: .center)
@@ -34,7 +42,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(title: "拿起次数",
-                 image: Image(systemName: "iphone.homebutton"),
+                 image: Image("pickup_count"),
                  subTitle: "40次")
         
     }

@@ -38,6 +38,7 @@ class Statistics: ObservableObject {
             screenTimeInWalking += 1
         }
     }
+
     func calculateAllData() {
         screenTimeInWalking = 0
         let items = fetchTodayEventItems()

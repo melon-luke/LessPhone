@@ -82,6 +82,7 @@ class EventBus {
     private func unLockAction() {
         self.isUnLocking = true
         Storage.shared.addLockEvent(isLocked: false)
+        self.triggerAlert()
         LocalNotificationManager.shared.sendEvent(text: "unLockScreen")
         self.timerCancellable = self.timer
             .autoconnect()
@@ -94,7 +95,7 @@ class EventBus {
                     Storage.shared.addTimerTriggerEvent(duration: Int64(self.duration), isWalking: isWalking)
                 }
                 LocalNotificationManager.shared.sendEvent(text: "timer, iswalking=\(self.isWalking)")
-//                self.triggerAlert()
+                self.triggerAlert()
             })
     }
     private func triggerAlert() {

@@ -8,16 +8,17 @@
 import Foundation
 
 extension Int {
-//    extension Statistics {
-        func hourMinSec() -> (Int, Int, Int) {
-            return (self / 3600, self / 60, self % 60)
-        }
-        func hourMin() -> (Int, Int) {
-            return (self / 60, self % 60)
-        }
-//    }
+    func hourMinSec() -> (Int, Int, Int) {
+        let h = self / 3600
+        let m = (self - h * 3600) / 60
+        let s = self % 60
+        return (h, m, s)
+    }
+    func hourMin() -> (Int, Int) {
+        return (self / 60, self % 60)
+    }
 
-    func timeString_ch() -> String {
+    func secToTimeString_ch() -> String {
         let (h, m, s) = self.hourMinSec()
         var res = ""
         if h != 0 {
@@ -28,6 +29,17 @@ extension Int {
         }
         if (h == 0 && m == 0) {
             res = "\(s)秒"
+        }
+        return res
+    }
+    func minToTimeString_ch() -> String {
+        let (h, m) = self.hourMin()
+        var res = ""
+        if h != 0 {
+            res += "\(h)小时"
+        }
+        if m != 0 {
+            res += "\(m)分钟"
         }
         return res
     }

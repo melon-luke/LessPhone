@@ -40,7 +40,7 @@ struct PreferenceView: View {
                         HStack {
                             Text("屏幕使用时间限制")
                             Spacer()
-                            Text(Preference.screenLimitTime.timeString_ch())
+                            Text(Preference.screenLimitTime.minToTimeString_ch())
                                 .foregroundColor(Color.text_sub)
                             Image(systemName: "chevron.forward")
                                 .foregroundColor(Color.text_sub)
