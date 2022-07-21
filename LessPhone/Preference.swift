@@ -10,6 +10,7 @@ protocol AlertRules {
     static func check()
 }
 struct Preference {
+//    let shared = Preference()
     // h: m = beginOfDay / 60 : beginOfDay % 60
     // 一天开始时间，存总分钟数
     static var beginOfDay: Int {
@@ -72,22 +73,22 @@ struct Preference {
     
     struct Const {
         // 例如23 : 10
-        let beginOfDaytPicker = (hour : (0...6).map { $0 },
+        static let beginOfDaytPicker = (hour : (0...6).map { $0 },
                                  minute : (0..<59).map { $0})
         
         // 例如23 : 10
-        let screenLimitPicker = (hour : (0..<24).map { $0 },
+        static let screenLimitPicker = (hour : (0..<24).map { $0 },
                                  minute : (0..<5).map { $0 * 10})
         
         // 小于60分钟 显示1小时
-        let remindPerMinuteArr = [15, 30, 60]
+        static let remindPerMinuteArr = [15, 30, 60]
         
         
         // 小于60分钟 显示1小时
-        let pickupCount = [1, 10, 25]
+        static let pickupCount = [1, 10, 25]
         
         // 小于60分钟 显示1小时
-        let pickupRemindPerCount = [10] + (1...10).map { $0 * 20}
+        static let pickupRemindPerCount = [10] + (1...10).map { $0 * 20}
     }
 }
 

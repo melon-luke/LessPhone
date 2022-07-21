@@ -39,7 +39,10 @@ extension LocalNotificationManager {
     func sendAppKill() {
         LocalNotificationManager.shared.sendNotification(title: "请不要关掉我！", subtitle: nil, body: "强制退出后将无法统计到你的屏幕使用时间，点击重新打开", launchIn: 0.1)
     }
-    func sendWalking() {
-        LocalNotificationManager.shared.sendNotification(title: "请不要关掉我！", subtitle: nil, body: "强制退出后将无法统计到你的屏幕使用时间，点击重新打开", launchIn: 0.1)
+    func sendLocation(text: String) {
+        LocalNotificationManager.shared.sendNotification(title: "LessPhone当前位置", subtitle: nil, body: text, launchIn: 0.1)
+    }
+    func sendEvent(text: String) {
+//        LocalNotificationManager.shared.sendNotification(title:"LessPhone Event" , subtitle: nil, body: text, launchIn: 0.1)
     }
 }

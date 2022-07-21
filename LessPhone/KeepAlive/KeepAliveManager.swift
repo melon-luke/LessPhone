@@ -19,9 +19,12 @@ class KeepAliveManager: NSObject, ObservableObject {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.distanceFilter = 5  // specified in meters
     }
 
     func run() {
+        // 太费电
+//        AudioManager.shared.openBackgroundAudioAutoPlay = true
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -54,6 +57,8 @@ extension KeepAliveManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         lastLocation = location
+//        location.speed
+//        LocalNotificationManager.shared.sendLocation(text: location.description)
         print(#function, location)
     }
 }

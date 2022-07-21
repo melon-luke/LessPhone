@@ -76,12 +76,13 @@ class EventBus {
             self.timerCancellable?.cancel()
             self.realTimeUITimerCancellable?.cancel()
             Storage.shared.addLockEvent(isLocked: true)
+            LocalNotificationManager.shared.sendEvent(text: "lockScreen")
         }
     }
     private func unLockAction() {
         self.isUnLocking = true
         Storage.shared.addLockEvent(isLocked: false)
-        
+        LocalNotificationManager.shared.sendEvent(text: "unLockScreen")
         self.timerCancellable = self.timer
             .autoconnect()
             .sink(receiveValue: { [weak self] timer in
@@ -92,6 +93,7 @@ class EventBus {
                 self.fetchStepCount { isWalking in
                     Storage.shared.addTimerTriggerEvent(duration: Int64(self.duration), isWalking: isWalking)
                 }
+                LocalNotificationManager.shared.sendEvent(text: "timer, iswalking=\(self.isWalking)")
 //                self.triggerAlert()
             })
     }

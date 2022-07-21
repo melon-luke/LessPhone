@@ -48,21 +48,12 @@ class Statistics: ObservableObject {
         Preference.check()
     }
     func calculateWalkingScreenTime(items: [EventItem]) -> Int {
-        var walkingTotalSec = 0
-        if items.count == 0 {
-            return 0
-        }
-        if !items.last!.isWalking {
-            return 0
-        }
-        let reversexItems = items.reversed()
-        for item in reversexItems {
-            walkingTotalSec += Int(item.duration)
-            if !item.isWalking {
-                break
+        let walkingTotalSec = items
+            .filter { $0.eventType == .timerTrigger && $0.isWalking }
+            .reduce(0) { sum, item in
+                sum + item.duration
             }
-        }
-        return walkingTotalSec
+        return Int(walkingTotalSec)
     }
     
     func calculateTodayPickUpDownTime(items: [EventItem]) {
@@ -135,7 +126,7 @@ class Statistics: ObservableObject {
         //获取今天凌晨时间
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date())
-        let (h,m) = hourMin(from: Preference.beginOfDay)
+        let (h,m) = Self.hourMin(from: Preference.beginOfDay)
         components.hour = h
         components.minute = m
         components.second = 0
@@ -143,43 +134,73 @@ class Statistics: ObservableObject {
     }
 }
 //
-extension Date {
-    // 返回北京时间
-    static func current() -> Date {
-        let date = Date()
-        let interval = NSTimeZone.system.secondsFromGMT(for: date)
-        return date.addingTimeInterval(TimeInterval(interval))
-    }
-    // 返回北京时间
-    func beijing() -> Date {
-        let interval = NSTimeZone.system.secondsFromGMT(for: self)
-        return self.addingTimeInterval(TimeInterval(interval))
-    }
-    private static let formatter =  DateFormatter()
-    func beijingStr(_ formatterStr: String) -> String {
+//extension Date {
+//    // 返回北京时间
+//    static func current() -> Date {
+//        let date = Date()
+//        let interval = NSTimeZone.system.secondsFromGMT(for: date)
+//        return date.addingTimeInterval(TimeInterval(interval))
+//    }
+//    // 返回北京时间
+//    func beijing() -> Date {
 //        let interval = NSTimeZone.system.secondsFromGMT(for: self)
-//        let date = self.addingTimeInterval(TimeInterval(interval))
-        
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = formatterStr
-////        [NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
-//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 8)//NSTimeZone(name: <#T##String#>)
-//        return dateFormatter.string(from: self)
-
-        Date.formatter.dateFormat = formatterStr
-        
-//        formater.locale = Locale(identifier: "zh_hans_CN")
-        Date.formatter.timeZone = TimeZone.current
-//        formater.dateStyle = .medium
-//        formater.timeStyle = .medium
-        return Date.formatter.string(from: self)
-    }
-}
+//        return self.addingTimeInterval(TimeInterval(interval))
+//    }
+//    private static let formatter =  DateFormatter()
+//    func beijingStr(_ formatterStr: String) -> String {
+////        let interval = NSTimeZone.system.secondsFromGMT(for: self)
+////        let date = self.addingTimeInterval(TimeInterval(interval))
+//        
+////        let dateFormatter = DateFormatter()
+////        dateFormatter.dateFormat = formatterStr
+//////        [NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
+////        dateFormatter.timeZone = TimeZone(secondsFromGMT: 8)//NSTimeZone(name: <#T##String#>)
+////        return dateFormatter.string(from: self)
+//
+//        Date.formatter.dateFormat = formatterStr
+//        
+////        formater.locale = Locale(identifier: "zh_hans_CN")
+//        Date.formatter.timeZone = TimeZone.current
+////        formater.dateStyle = .medium
+////        formater.timeStyle = .medium
+//        return Date.formatter.string(from: self)
+//    }
+//}
 extension Statistics {
-    func hourMinSec(from totalSec: Int) -> (Int, Int, Int) {
+    static func hourMinSec(from totalSec: Int) -> (Int, Int, Int) {
         return (totalSec / 3600, totalSec / 60, totalSec % 60)
     }
-    func hourMin(from totalMin: Int) -> (Int, Int) {
+    static func hourMin(from totalMin: Int) -> (Int, Int) {
         return (totalMin / 60, totalMin % 60)
+    }
+    static func hourMinArray(from data: (hour: [Int], minute: [Int])) -> [[Int]] {
+        let res: [[Int]] = [
+            data.hour,
+            data.minute
+        ]
+        return res
+    }
+    static func hourMinStrArray(from data: (hour: [Int], minute: [Int])) -> [[String]] {
+        let res: [[String]] = [
+            data.hour.map { "\($0)" },
+            data.minute.map { "\($0)" },
+        ]
+        return res
+    }
+    static func hourMinIndexArray(from totalMin: Int, in data: (hour:[Int], minute: [Int])) -> [Int]? {
+        let tuple = hourMin(from: totalMin)
+        if let hIdx = data.hour.firstIndex(of: tuple.0),
+           let mIdx = data.minute.firstIndex(of: tuple.1) {
+            return  [Int(hIdx), Int(mIdx)]
+        }
+        return nil
+    }
+    static func totalMin(of indexArray: [Int], in data: (hour:[Int], minute: [Int])) -> Int? {
+        if indexArray.count != 2 {
+            return nil
+        }
+        let h = data.hour[indexArray[0]]
+        let m = data.minute[indexArray[1]]
+        return h * 60 + m
     }
 }

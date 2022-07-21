@@ -49,11 +49,13 @@ struct Storage {
     // 查询
     func fetchEventBeforeDate(_ date: Date, type: EventItem.EventType? = nil, count: Int? = nil) -> [EventItem]? {
         let request = EventItem.fetchRequest()
+
         if let type = type {
             request.predicate = NSPredicate(format: "timestamp < %@ AND type = %d", date as CVarArg, type.rawValue)
         } else {
             request.predicate = NSPredicate(format: "timestamp < %@", date as CVarArg)
         }
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
         if let count = count {
             request.fetchLimit = count
         }

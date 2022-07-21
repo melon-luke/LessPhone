@@ -40,7 +40,7 @@ struct LessPhoneApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) var scenePhase
     let coreDataManager = CoreDataManager.shared
-
+    @State var backTaskId: UIBackgroundTaskIdentifier?
         
     init() {
         KeepAliveManager.shared.run()
@@ -61,15 +61,21 @@ struct LessPhoneApp: App {
                 rp("active")
                 
                 EventBus.shared.appActive(true)
-                UIApplication.shared.beginBackgroundTask (withName: "Finish Network Tasks") {
-                    rp("forcefinish")
-                }
             case .inactive:
                 EventBus.shared.appActive(false)
                 rp("inactive")
+                Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+//                    guard let self = self else { return }
+                    let timeRemianing = UIApplication.shared.backgroundTimeRemaining
+                    rp("backgroundTimeRemaining\(timeRemianing)")
+                }
+                backTaskId = UIApplication.shared.beginBackgroundTask (withName: "Finish Network Tasks") {
+                    rp("forcefinish")
+                }
+                
             case .background:
                 rp("background")
-                rp("backgroundTimeRemaining\(UIApplication.shared.backgroundTimeRemaining)")
+//                rp("backgroundTimeRemaining\(UIApplication.shared.backgroundTimeRemaining)")
             @unknown default:
                 rp("default")
             }

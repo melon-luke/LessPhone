@@ -1,8 +1,8 @@
 //
-//  UITool.swift
+//  UITools.swift
 //  LessPhone
 //
-//  Created by 宋申易 on 2022/7/18.
+//  Created by 宋申易 on 2022/7/20.
 //
 
 import Foundation
@@ -14,7 +14,4 @@ extension Color {
     static var text_sub = Color("text_sub")
     static var stress = Color("stress")
     static var progress_bg = Color("progress_bg")
-    
-//    Color(named: "backgound")
-//    [Color colorNamed:@"grass"];
 }
