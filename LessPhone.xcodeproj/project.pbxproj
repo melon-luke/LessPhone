@@ -30,6 +30,7 @@
 		BBA97B97284CA60E000F5C34 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97B96284CA60E000F5C34 /* Storage.swift */; };
 		BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BBA97BFD284CC626000F5C34 /* LPCoreData.xcdatamodeld */; };
 		BBA97C01284CCC2D000F5C34 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */; };
+		BBB6C940288A7107008A54B2 /* Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6C93F288A7107008A54B2 /* Alerter.swift */; };
 		BBCE0206286AE0A0008B2E5E /* EventItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */; };
 		BBCE0207286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */; };
 		BBCE020A286C2727008B2E5E /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCE0209286C2727008B2E5E /* Statistics.swift */; };
@@ -63,6 +64,7 @@
 		BBA97B96284CA60E000F5C34 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		BBA97BFE284CC626000F5C34 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		BBA97C00284CCC2D000F5C34 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		BBB6C93F288A7107008A54B2 /* Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerter.swift; sourceTree = "<group>"; };
 		BBCE0204286AE0A0008B2E5E /* EventItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BBCE0205286AE0A0008B2E5E /* EventItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BBCE0209286C2727008B2E5E /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				BBA97B94284B7D83000F5C34 /* EventBus.swift */,
 				BBCE0209286C2727008B2E5E /* Statistics.swift */,
 				BBCE020B286C285C008B2E5E /* Preference.swift */,
+				BBB6C93F288A7107008A54B2 /* Alerter.swift */,
 				BB84230E28854B7D000B2920 /* Utils.swift */,
 				BBE5496328573B6B0004EBED /* LocalNotificationManager.swift */,
 				BB2D936E284A669D0065BD20 /* Info.plist */,
@@ -272,6 +275,7 @@
 				BB1D47B8284A448100FC42ED /* LessPhoneApp.swift in Sources */,
 				BB48F97F2885565E009709BD /* CardView.swift in Sources */,
 				BB842309288145CC000B2920 /* MainCardView.swift in Sources */,
+				BBB6C940288A7107008A54B2 /* Alerter.swift in Sources */,
 				BB1D47C6284A50D700FC42ED /* KeepAliveManager.swift in Sources */,
 				BB2D9370284A69670065BD20 /* DebugTool.swift in Sources */,
 				BBA97BFF284CC626000F5C34 /* LPCoreData.xcdatamodeld in Sources */,

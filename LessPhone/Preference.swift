@@ -6,9 +6,7 @@
 //
 
 import Foundation
-protocol AlertRules {
-    static func check()
-}
+
 struct Preference {
 //    let shared = Preference()
     // h: m = beginOfDay / 60 : beginOfDay % 60
@@ -89,27 +87,5 @@ struct Preference {
         
         // 小于60分钟 显示1小时
         static let pickupRemindPerCount = [10] + (1...10).map { $0 * 20}
-    }
-    
-    private static var sendScreenTimeTimeStamp: Int = 0
-}
-
-extension Preference: AlertRules {
-    static func check() {
-        // 提醒拿起次数
-        if Statistics.shared.pickupCount % Preference.pickupRemindPerCount == 0 {
-            LocalNotificationManager.shared.sendPickup(count: Statistics.shared.pickupCount)
-        }
-        
-        // 屏幕时间
-        let current = Int(Date().timeIntervalSince1970)
-        if sendScreenTimeTimeStamp == 0 ||
-            (current - sendScreenTimeTimeStamp >= Preference.screenLimitTimeRemindPerMinute * 60) {
-            if (Statistics.shared.screenTime / 60) % Preference.screenLimitTimeRemindPerMinute == 0 {
-                LocalNotificationManager.shared.sendScreenTime(second: Statistics.shared.screenTime)
-                sendScreenTimeTimeStamp = Int(Date().timeIntervalSince1970)
-            }
-        }
-       
     }
 }

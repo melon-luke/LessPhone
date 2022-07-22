@@ -46,7 +46,7 @@ class Statistics: ObservableObject {
         pickupCount = calculateUnlockCount(items: items)
         screenTime = max(screenTime, calculateScreenTime(items: items))
         screenTimeInWalking = max(screenTimeInWalking, calculateWalkingScreenTime(items: items))
-        Preference.check()
+        Alerter.runRules()
     }
     func calculateWalkingScreenTime(items: [EventItem]) -> Int {
         let walkingTotalSec = items
