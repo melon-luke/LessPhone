@@ -24,7 +24,7 @@ class KeepAliveManager: NSObject, ObservableObject {
 
     func run() {
         // 太费电
-        AudioManager.shared.openBackgroundAudioAutoPlay = true
+//        AudioManager.shared.openBackgroundAudioAutoPlay = true
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }

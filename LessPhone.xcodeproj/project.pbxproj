@@ -417,7 +417,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LessPhone/Preview Content\"";
-				DEVELOPMENT_TEAM = 3E7V932WPA;
+				DEVELOPMENT_TEAM = 79RX5J89VM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LessPhone/Info.plist;
@@ -436,7 +436,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = melon.luke.lessphone.LessPhone;
+				PRODUCT_BUNDLE_IDENTIFIER = melon.luke.lessphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -452,7 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LessPhone/Preview Content\"";
-				DEVELOPMENT_TEAM = 3E7V932WPA;
+				DEVELOPMENT_TEAM = 79RX5J89VM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LessPhone/Info.plist;
@@ -471,7 +471,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = melon.luke.lessphone.LessPhone;
+				PRODUCT_BUNDLE_IDENTIFIER = melon.luke.lessphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -25,7 +25,12 @@ struct Preference {
             UserDefaults.standard.set(newValue, forKey: "kScreenLimitTime")
         }
         get {
-            UserDefaults.standard.integer(forKey: "kScreenLimitTime")
+            var time = UserDefaults.standard.integer(forKey: "kScreenLimitTime")
+            if time == 0 {
+                time = 5 * 60
+            }
+            return time
+            
         }
     }
     
@@ -35,7 +40,11 @@ struct Preference {
             UserDefaults.standard.set(newValue, forKey: "kScreenLimitTimeRemindPerMinute")
         }
         get {
-            UserDefaults.standard.integer(forKey: "kScreenLimitTimeRemindPerMinute")
+            var time = UserDefaults.standard.integer(forKey: "kScreenLimitTimeRemindPerMinute")
+            if time == 0 {
+                time = 15
+            }
+            return time
         }
     }
     
@@ -65,7 +74,11 @@ struct Preference {
             UserDefaults.standard.set(newValue, forKey: "kPickupRemindPerCount")
         }
         get {
-            UserDefaults.standard.integer(forKey: "kPickupRemindPerCount")
+            var count = UserDefaults.standard.integer(forKey: "kPickupRemindPerCount")
+            if count == 0 {
+                count = 10
+            }
+            return count
         }
     }
     
